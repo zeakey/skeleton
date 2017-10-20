@@ -292,7 +292,7 @@ layer {
 
 layer { 
   type: "Softmax" 
-  name: "fuse-softmax"
+  name: "softmax_fuse"
   bottom: "concat-fuse" 
-  top:"fuse-out"  
+  top:"softmax_fuse"  
 }
