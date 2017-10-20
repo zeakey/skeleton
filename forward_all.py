@@ -6,7 +6,7 @@ import scipy.io
 import os, sys, shutil, argparse
 from os.path import join, splitext, split
 parser = argparse.ArgumentParser(description='Forward all testing images.')
-parser.add_argument('--model', type=str, default='snapshot/fsds_iter_30000.caffemodel')
+parser.add_argument('--model', type=str, default='snapshot/fsds-skl_iter_30000.caffemodel')
 parser.add_argument('--net', type=str, default='models/fsds_test.prototxt')
 parser.add_argument('--output', type=str, default='softmax_fuse')
 parser.add_argument('--gpu', type=int, default=0)
