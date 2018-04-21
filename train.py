@@ -9,7 +9,7 @@ import caffe
 parser = argparse.ArgumentParser(description='Training skeleton nets.')
 parser.add_argument('--gpu', type=int, help='gpu ID', default=0)
 parser.add_argument('--solver', type=str, help='solver', default='models/fsds_solver.prototxt')
-parser.add_argument('--weights', type=str, help='base model', default='vgg16convs.caffemodel')
+parser.add_argument('--weights', type=str, help='base model', default='models/vgg16convs.caffemodel')
 args = parser.parse_args()
 assert isfile(args.weights) and isfile(args.solver)
 def upsample_filt(size):
