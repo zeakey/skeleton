@@ -11,7 +11,7 @@ parser.add_argument('--net', type=str, default='models/fsds_test.prototxt')
 parser.add_argument('--output', type=str, default='softmax_fuse')
 parser.add_argument('--gpu', type=int, default=0)
 parser.add_argument('--ms', type=str, default='False') # use multiscale
-parser.add_argument('--all', type=str, default='False') # save all interior outputs
+parser.add_argument('--save_all', type=str, default='False') # save all interior outputs
 parser.add_argument('--scale', type=float, default=1) # resize image
 parser.add_argument('--test_dir', type=str, default='data/SK-LARGE/images/test') # switch between testing set.
 parser.add_argument('--save_dir', type=str, default=None)
@@ -21,14 +21,18 @@ import caffe
 caffe.set_mode_gpu()
 caffe.set_device(args.gpu)
 ms = args.ms
-if ms.upper() == 'TRUE':
-  args.ms = True
-else:
-  args.ms = False
-if args.all == 'TRUE':
-  args.all = True
-else:
-  args.all = False
+EPSILON = 1e-6
+def str2bool(str1):
+  if str1.lower() == 'true' or str1.lower() == '1':
+    return True
+  elif str1.lower() == 'false' or str1.lower() == '0':
+    return False
+  else:
+    raise ValueError('Error!')
+
+args.ms = str2bool(args.ms)
+args.save_all = str2bool(args.save_all)
+
 def getsk(x):
   x = np.squeeze(x)
   if x.ndim == 2:
@@ -60,12 +64,12 @@ else:
 if args.ms:
   save_dir += "_multiscale"
 if args.scale != 1:
-  save_dir += str(args.scale)
+  save_dir += '_scale'+str(args.scale)
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 imgs = [i for i in os.listdir(test_dir) if '.jpg' in i]
 nimgs = len(imgs)
-if args.all:
+if args.save_all:
   img = imgs[0]
   img = cv2.imread(join(test_dir, img)).astype(np.float32)
   o = forward(img)
@@ -78,11 +82,12 @@ for i in range(nimgs):
   img = expand_channel(img)
   h, w, _ = img.shape
   skeleton = np.zeros([h, w], np.float32)
-  if args.all:
+  if args.save_all:
     for k in keys:
       outputs[k] = np.zeros([h, w], np.float32)
   if args.ms:
-    scales = np.array([0.5, 1, 1.5])
+    scales = np.array([0.25, 0.5, 1, 2])
+    #scales = np.array([0.5, 1, 1.5])
   else:
     scales = np.array([1])
   scales = scales * args.scale
@@ -92,15 +97,16 @@ for i in range(nimgs):
     result = forward(img1)
     sk1 = getsk(result[args.output])
     skeleton += cv2.resize(sk1, (w, h), interpolation=cv2.INTER_CUBIC).astype(np.float32)
-    if args.all:
+    if args.save_all:
       for k in keys:
         sk1 = getsk(result[k])
         outputs[k] += cv2.resize(sk1, (w, h), interpolation=cv2.INTER_CUBIC).astype(np.float32)
   skeleton /= len(scales)
   fn, ext = splitext(imgs[i])
-  # scipy.io.savemat(join(save_dir, fn),dict({'skeleton':skeleton / skeleton.max()}), appendmat=True)
-  scipy.misc.imsave(join(save_dir, fn+'.png'), skeleton / skeleton.max())
-  if args.all:
+  if np.count_nonzero(skeleton) == 0:
+    print("Empty detection at %s" % fn)
+  scipy.misc.imsave(join(save_dir, fn+'.png'), skeleton / max(skeleton.max(), EPSILON))
+  if args.save_all:
     for k in keys:
       scipy.misc.imsave(join(save_dir, fn+'_'+k+'.png'), outputs[k] / outputs[k].max())
   print "Saving to '" + join(save_dir, imgs[i][0:-4]) + "', Processing %d of %d..."%(i + 1, nimgs)
