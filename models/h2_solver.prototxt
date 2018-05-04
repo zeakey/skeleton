@@ -1,0 +1,13 @@
+net: "models/h2_train.prototxt"
+base_lr: 1e-6
+lr_policy: "step"
+gamma: 0.5
+iter_size: 10
+stepsize: 4000
+display: 10
+max_iter: 20000
+momentum: 0.9
+weight_decay: 0.0002
+snapshot: 2000
+snapshot_prefix: "snapshot/h2feat11-skl"
+solver_mode: GPU
