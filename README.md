@@ -1,11 +1,18 @@
 # Object Skeleton Detection with FCN
-## How to use
-### For training:
+This repo contains codes for our relevant papers on **Object Skeleton Detection in Natural Images**, they are
+
+1. Object Skeleton Extraction in Natural Images by Fusing Scale-associated Deep Side Outputs, **CVPR2016**
+2. DeepSkeleton: Learning Multi-task Scale-associated Deep Side Outputs for Object Skeleton Extraction in Natural Images, **IEEE Trans on Image Processing**
+3. Hi-Fi: Hierarchical Feature Integration for Skeleton Detection, **IJCAI2018**
+
+
+### Simple Steps For training:
 1. clone source and build caffe inside;
 2. download [SK-LARGE](http://kaiz.xyz/sk-large) dataset to `skeleton/data/` and do data augmentation follow instructions there;
 3. download initial model [vgg16convs.caffemodel](http://zhaok-data.oss-cn-shanghai.aliyuncs.com/caffe-model/vgg16convs.caffemodel) to `skeleton/models/`;
-4. `python train.py`.
+4. `python train.py` (by default we use the 'FSDS' which is proposed in paper[1]).
 
-Refer to [project page](http://kaiz.xyz/deepsk) for more instruction on how to use this code.
+Refer to <http://kaiz.xyz/deepsk> for detailed instructions, frequently asked questions and pretrained models.
+
 ___
-KAI ZHAO  <http://kaiz.xyz>
+*Copyright* [KAI ZHAO](http://kaiz.xyz)
