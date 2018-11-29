@@ -14,5 +14,9 @@ This repo contains codes for our relevant papers on **Object Skeleton Detection 
 
 Refer to <http://kaiz.xyz/deepsk> for detailed instructions, frequently asked questions and pretrained models.
 
+
+### FAQ
+[Frequently asked questions](FAQ.md)
 ___
+
 *Copyright* [KAI ZHAO](http://kaiz.xyz)
