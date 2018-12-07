@@ -1,22 +1,9 @@
 name: "H1_TRAIN"
-layer {
-  name: "data"
-  type: "ImageLabelmapData"
-  top: "data"
-  top: "label"
-  transform_param {
-    mirror: false
-    mean_value: 104.00699
-    mean_value: 116.66877
-    mean_value: 122.67892
-  }
-  image_data_param {
-    source: "data/SK-LARGE/list.txt"
-    batch_size: 1
-    shuffle: true
-    root_folder: "data/SK-LARGE/"
-  }
-}
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 100
+input_dim: 100
 layer {
   name: "conv0"
   type: "Convolution"
@@ -1399,44 +1386,28 @@ layer {
   top: "crop_h1s4_5"
 }
 layer {
-  name: "loss_h1s1_2"
-  type: "SoftmaxWithLoss"
+  name: "softmax_h1_fuse"
+  type: "Softmax"
   bottom: "crop_h1s1_2"
-  bottom: "label"
-  top: "loss_h1s1_2"
-  loss_param {
-    normalize: false
-  }
+  top: "softmax_h1s1_2"
 }
 layer {
-  name: "loss_h1s2_3"
-  type: "SoftmaxWithLoss"
+  name: "softmax_h1s2_3"
+  type: "Softmax"
   bottom: "crop_h1s2_3"
-  bottom: "label"
-  top: "loss_h1s2_3"
-  loss_param {
-    normalize: false
-  }
+  top: "softmax_h1s2_3"
 }
 layer {
-  name: "loss_h1s3_4"
-  type: "SoftmaxWithLoss"
+  name: "softmax_h1s3_4"
+  type: "Softmax"
   bottom: "crop_h1s3_4"
-  bottom: "label"
-  top: "loss_h1s3_4"
-  loss_param {
-    normalize: false
-  }
+  top: "softmax_h1s3_4"
 }
 layer {
-  name: "loss_h1s4_5"
-  type: "SoftmaxWithLoss"
+  name: "softmax_h1s4_5"
+  type: "Softmax"
   bottom: "crop_h1s4_5"
-  bottom: "label"
-  top: "loss_h1s4_5"
-  loss_param {
-    normalize: false
-  }
+  top: "softmax_h1s4_5"
 }
 layer {
   name: "slice_h1s1_2"
@@ -1676,4 +1647,10 @@ layer {
   loss_param {
     normalize: false
   }
+}
+layer {
+  name: "softmax_h1_fuse"
+  type: "Softmax"
+  bottom: "h1_fuse"
+  top: "softmax_h1_fuse"
 }
