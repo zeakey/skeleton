@@ -1,7 +1,7 @@
 net: "models/h1_train.prototxt"
 base_lr: 1e-6
 lr_policy: "step"
-gamma: 0.5
+gamma: 0.1
 iter_size: 10
 stepsize: 20000
 display: 10
