@@ -86,7 +86,7 @@ for i in range(nimgs):
     for k in keys:
       outputs[k] = np.zeros([h, w], np.float32)
   if args.ms:
-    scales = np.array([0.25, 0.5, 1, 2])
+    scales = np.array([0.5, 1, 2])
     #scales = np.array([0.5, 1, 1.5])
   else:
     scales = np.array([1])
