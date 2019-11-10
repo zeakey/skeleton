@@ -9,10 +9,10 @@ This repo contains codes for our relevant papers on **Object Skeleton Detection 
 ### Simple Steps For training:
 1. clone source and build caffe inside;
 2. download [SK-LARGE](http://kaiz.xyz/sk-large) dataset to `skeleton/data/` and do data augmentation follow instructions there;
-3. download initial model [vgg16convs.caffemodel](http://zhaok-data.oss-cn-shanghai.aliyuncs.com/caffe-model/vgg16convs.caffemodel) to `skeleton/models/`;
+3. download initial model <http://data.kaizhao.net/projects/edge/vgg16convs.caffemodel> to `skeleton/models/`;
 4. `python train.py` (by default we use the 'FSDS' which is proposed in paper[1]).
 
-Refer to <http://kaiz.xyz/deepsk> for detailed instructions, frequently asked questions and pretrained models.
+Refer to <http://kaizhao.net/deepsk> for detailed instructions, frequently asked questions and pretrained models.
 
 
 ### FAQ
